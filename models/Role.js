@@ -1,0 +1,14 @@
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
+
+const Role = sequelize.define('role', {
+    name: { 
+        type: DataTypes.STRING, 
+        allowNull:false 
+    },
+    
+});
+
+sequelize.sync();
+
+export default Role;
