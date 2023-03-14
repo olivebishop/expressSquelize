@@ -13,6 +13,9 @@ db.User = User(sequelize, Sequelize);
 import Role from './Role.js';
 db.Role = Role(sequelize, Sequelize);
 
+import UserRole from './userRole.js';
+db.UserRole = UserRole(sequelize, Sequelize);
+
 db.Role.belongsToMany(db.User, {
   through: "user_roles",
   foreignKey: "roleId",
