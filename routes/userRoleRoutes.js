@@ -10,8 +10,8 @@ router.get('/user-role/:id', getUserRoleById);
 
 router.post('/user-role', createUserRole);
 
-router.patch('/user-role/:id', updateUserRoleById);
+router.patch('/users/:usersId/roles/:rolesId', updateUserRoleById);
 
-router.delete('/user-role/:id', deleteUserRoleById);
+router.delete('/users/:users_id/roles/:roles_id', deleteUserRoleById);
 
 export default router;

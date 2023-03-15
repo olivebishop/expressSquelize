@@ -46,14 +46,14 @@ const createUserRole = async (req, res) => {
 }
 
 const updateUserRoleById = async (req, res) => {
-    const { id } = req.params;
-    const { name} = req.body;
+    const { usersId, rolesId } = req.params;
+    const { roleId, userId} = req.body;
     try {
         const [ response ] = await UserRole.update(
             {
-                "name": name,
-                },
-                { where: { id: id}});
+                "roleId": roleId,
+                "userId": userId},
+                { where: { userId: usersId, roleId: rolesId}});
         if(response === 0){
             res.status(404).json({"message": "UserRole not found"});
         }else if(response){
@@ -65,10 +65,10 @@ const updateUserRoleById = async (req, res) => {
 }
 
 const deleteUserRoleById = async (req, res) => {
-    const { id } = req.params;
+    const { usersId , rolesId} = req.params;
 
     try {
-        const response = await UserRole.destroy({where: {id: id}})
+        const response = await UserRole.destroy({where: {userId: id}})
         if(response === 0){
             res.status(404).json({"message": "UserRole not found"});
         }else if(response){
