@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import roleRoutes from './routes/roleRoutes.js';
 import userRoleRouter from './routes/userRoleRoutes.js';
+import authRoutes from './routes/authRoutes.js'
+import errorHandler from './middlewares/errorHandler.js';
 import db from './models/index.js';
 
 const sequelize = db.sequelize;
@@ -12,6 +14,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(errorHandler);
 
 sequelize.sync({alter: true}).then(() => {
     console.log("Tables created.");
@@ -22,6 +25,7 @@ sequelize.sync({alter: true}).then(() => {
 app.use('/api/v1', userRoutes);
 app.use('/api/v1', roleRoutes);
 app.use('/api/v1', userRoleRouter);
+app.use('/api/v1', authRoutes);
 
 const port = process.env.PORT;
 
