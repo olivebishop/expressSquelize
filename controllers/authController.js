@@ -14,7 +14,7 @@ const login = async (req, res, next) => {
       }else{
          const result = await bcrypt.compare(password, user.password);
          if(result){
-            const token = jwt.sign({ id: user.id }, 'secret_jwt', { expiresIn: '1hr' });
+            const token = jwt.sign({ user: user }, 'secret_jwt', { expiresIn: '1hr' });
             res.json({ token: token });
          }else{
             res.status(401).json({"message": "Invalid username or password"});
@@ -26,11 +26,11 @@ const login = async (req, res, next) => {
 }
 
 const signup = async (req, res, next) => {
-   const { username, email, password } = req.body;
+   const { fullname, username, email, password } = req.body;
 
    try {
       const hash = await bcrypt.hash(password, 10);
-      const user = await User.create({ username: username, email: email, password: hash });
+      const user = await User.create({ fullname:fullname, username: username, email: email, password: hash });
       const token = jwt.sign({ id: user.id }, 'secret_key', { expiresIn: '1hr'});
       res.json({ token: token })
    } catch (error) {
