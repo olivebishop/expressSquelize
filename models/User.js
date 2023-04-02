@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize';
+
 const User = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
       fullname: {

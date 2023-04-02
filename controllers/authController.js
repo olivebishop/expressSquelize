@@ -10,12 +10,12 @@ const login = async (req, res, next) => {
    try {
       const user = await User.findOne({where: {username: username}});
       if(!user){
-         res.status(401).json({"message": "Invalid username or password"});
+         res.status(400).json({"message": "Invalid username or password"});
       }else{
          const result = await bcrypt.compare(password, user.password);
          if(result){
             const token = jwt.sign({ user: user }, 'secret_jwt', { expiresIn: '1hr' });
-            res.json({ token: token });
+            res.status(200).json({ token: token });
          }else{
             res.status(401).json({"message": "Invalid username or password"});
          }

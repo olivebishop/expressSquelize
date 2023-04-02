@@ -47,10 +47,11 @@ const createUser = async (req, res) => {
 
 const updateUserById = async (req, res) => {
     const { id } = req.params;
-    const { username, email, password} = req.body;
+    const { fullname,username, email, password} = req.body;
     try {
         const [ response ] = await User.update(
             {
+                "fullname":fullname,
                 "username": username,
                 "email": email,
                 "password": password},

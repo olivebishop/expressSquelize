@@ -27,4 +27,13 @@ db.User.belongsToMany(db.Role, {
   otherKey: "roleId"
 });
 
+// relationship btwn report and user
+import Report from './Report.js';
+db.Report = Report(sequelize, Sequelize);
+db.User.hasMany(db.Report,{
+  foreignKey: "user_id",
+});
+db.Report.belongsTo(db.User);
+
+
 export default db;
