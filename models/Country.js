@@ -1,15 +1,21 @@
 import { DataTypes } from 'sequelize';
+
 const Country = (sequelize, Sequelize) => {
-  const Country = sequelize.define("country", {
-    name: {
+  const Country = sequelize.define('country', {
+
+    countryName: {
       type: DataTypes.STRING,
-      allowNull: false 
+      allowNull: false,
     },
-    code: {
+   countryCode: {
       type: DataTypes.STRING,
-      allowNull: false 
-    }
+      allowNull: false,
+    },
   });
+
+  // Define the one-to-many relationship with Location
+  Country.hasMany(sequelize.models.Location, { foreignKey: 'countryId' });
+
   return Country;
 };
 

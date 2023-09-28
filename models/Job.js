@@ -9,6 +9,10 @@ description: {
 type: DataTypes.TEXT,
 allowNull: false
 },
+job_requirements: {
+type: DataTypes.TEXT,
+allowNull: false
+},
 type: {
 type: DataTypes.ENUM('full-time', 'part-time', 'contract'),
 allowNull: false

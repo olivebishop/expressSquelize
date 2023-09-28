@@ -8,7 +8,6 @@ import { DataTypes } from 'sequelize';
 //     type: DataTypes.STRING, 
 //     allowNull:false 
 // },
-
 // });
 
 // sequelize.sync();

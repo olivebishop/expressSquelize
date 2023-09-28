@@ -5,7 +5,7 @@ const Employee = (sequelize, Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false 
     },
-    passport_number: {
+    National_id: {
       type: DataTypes.STRING,
       allowNull: false 
     },
@@ -13,22 +13,7 @@ const Employee = (sequelize, Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false 
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false 
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false 
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false 
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false 
-    },
+    
     country_id: {
       type: DataTypes.INTEGER,
       allowNull: false 

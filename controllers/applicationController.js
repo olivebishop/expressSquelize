@@ -1,30 +1,24 @@
 // Import the necessary modules and database models
 import db from '../models/index.js';
 
-const { Job } = db;
+const { Application } = db;
 
-// const jobController = {};
-
-const createJob = async (req, res) => {
+const createApplication = async (req, res) => {
   try {
-    const { title, description, job_requirements, type, salary_range, location_id, employer_id } = req.body;
-    const job = await Job.create({
-      title,
-      description,
-      job_requirements,
-      type,
-      salary_range,
-      location_id,
-      employer_id
+    const { name, email, phone } = req.body;
+    const application = await Application.create({
+      name,
+      email,
+      phone
     });
-    res.status(201).json(job);
+    res.status(201).json(application);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error creating job' });
+    res.status(500).json({ message: 'Error creating application' });
   }
 };
 
-const getJobById = async (req, res) => {
+const getApplicationById = async (req, res) => {
   try {
     const job = await Job.findByPk(req.params.id);
     if (!job) {
@@ -37,7 +31,7 @@ const getJobById = async (req, res) => {
   }
 };
 
-const getAllJobs = async (req, res) => {
+const getAllApplications = async (req, res) => {
   try {
     const jobs = await Job.findAll();
     res.status(200).json(jobs);
@@ -47,7 +41,7 @@ const getAllJobs = async (req, res) => {
   }
 };
 
-const updateJob = async (req, res) => {
+const updateApplication = async (req, res) => {
   try {
     const job = await Job.findByPk(req.params.id);
     if (!job) {
@@ -57,7 +51,6 @@ const updateJob = async (req, res) => {
     await job.update({
       title,
       description,
-      job_requirements,
       type,
       salary_range,
       location_id,
@@ -70,7 +63,7 @@ const updateJob = async (req, res) => {
   }
 };
 
-const deleteJob = async (req, res) => {
+const deleteApplication = async (req, res) => {
   try {
     const job = await Job.findByPk(req.params.id);
     if (!job) {
@@ -84,4 +77,4 @@ const deleteJob = async (req, res) => {
   }
 };
 
-export {createJob, getJobById, getAllJobs, updateJob, deleteJob}
+export {createApplication, getApplicationById, getAllApplications, updateApplication, deleteApplication}    

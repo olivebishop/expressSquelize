@@ -1,4 +1,4 @@
-import db from '../models';
+import db from '../models/index.js';
 
 const Country = db.Country;
 
@@ -6,8 +6,8 @@ const Country = db.Country;
 const createCountry = async (req, res) => {
   try {
     const country = await Country.create({
-      name: req.body.name,
-      code: req.body.code,
+      countryName: req.body.name,
+      countryCode: req.body.code,
     });
 
     return res.status(201).json({

@@ -1,6 +1,5 @@
 import db from '../models';
-
-const Employer = db.Employer;
+const { Employer, Admin } = db; // Use object destructuring to access the models
 
 const createEmployer = async (req, res) => {
   try {
@@ -58,10 +57,31 @@ const deleteEmployerById = async (req, res) => {
   }
 };
 
+const assignAccountTypeToEmployer = async (req, res) => {
+  try {
+    const { employerId, roleId } = req.body;
+    const adminId = req.user.adminId; // Assuming you have a way to retrieve the admin's ID from the request
+
+    const admin = await Admin.findByPk(adminId);
+
+    if (!admin) {
+      throw new Error('Admin not found');
+    }
+
+    // Use the assignAccountType method from the Admin model
+    await admin.assignAccountType(employerId, roleId);
+
+    res.status(200).json({ success: true, message: 'Account type assigned successfully' });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+};
+
 export {
   createEmployer,
   getEmployers,
   getEmployerById,
   updateEmployerById,
-  deleteEmployerById
+  deleteEmployerById,
+  assignAccountTypeToEmployer
 };
