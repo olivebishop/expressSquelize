@@ -42,7 +42,7 @@ const sendPasswordResetEmail = (user, res) => {
     },
   });
 
-  const mailOptions = {
+const mailOptions = {
     from: "olivehendrilgen1@gmail.com", // Replace with your Gmail email
     to: user.email,
     subject: "Reset Password Link",
@@ -50,37 +50,37 @@ const sendPasswordResetEmail = (user, res) => {
     Please click on the following link below or paste this link into your browser to complete this process within an hour of receiving it:
     <a href="http://localhost:3000/reset/${user.id}">Click here to reset your password</a>
     If you did not request this, please ignore this email, and your password will remain the same.`,
-  };
+};
 
-  transporter.sendMail(mailOptions, (err, response) => {
+    transporter.sendMail(mailOptions, (err, response) => {
     if (err) {
-      console.log("There was an error sending the email", err);
-      res.status(500).json("Email sending failed");
+    console.log("There was an error sending the email", err);
+    res.status(500).json("Email sending failed");
     } else {
-      console.log("Email sent successfully", response);
-      res.status(200).json("Password reset email sent");
+    console.log("Email sent successfully", response);
+    res.status(200).json("Password reset email sent");
     }
-  });
+});
 };
 
 // Function to send a forget password email
 const sendForgetPasswordEmail = (user, res) => {
-  const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         user: "olivehendrilgen1@gmail.com", 
         pass: "fsih juqg aora qhpb", 
     },
-  });
+});
 
-  const mailOptions = {
+const mailOptions = {
     from: "olivehendrilgen1@gmail.com",
     to: user.email,
     subject: "Forget Password Notification",
     html: `You are receiving this email because you requested assistance with your account password.
     If you did not request this, please ignore this email.
     If you need further assistance, please contact our support team.`,
-  };
+};
 
   transporter.sendMail(mailOptions, (err, response) => {
     if (err) {

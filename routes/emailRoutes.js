@@ -25,8 +25,8 @@ router.post("/forgetPassword", (req, res) => {
 
 router.post("/sendVerificationEmail", (req, res) => {
   const user = {
-    name: "olive",
-    email: "olivebishop9@gmail.com",
+    name: "mungai",
+    email: "mungaipeter640@gmail.com",
   };
 
   // Use the correct function name sendVerificationEmail

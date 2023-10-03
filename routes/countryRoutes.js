@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCountry, getAllCountries, getCountryById, updateCountryById, deleteCountryById } from '../controllers/countryController.js';
+import { createCountry, getAllCountries, getCountryById, updateCountry, deleteCountry } from '../controllers/countryController.js';
 
 const router = express.Router();
 
@@ -9,8 +9,8 @@ router.get('/countries/:id', getCountryById);
 
 router.post('/countries', createCountry);
 
-router.patch('/countries/:id', updateCountryById);
+router.patch('/countries', updateCountry);
 
-router.delete('/countries/:id', deleteCountryById);
+router.delete('/countries', deleteCountry);
 
 export default router;

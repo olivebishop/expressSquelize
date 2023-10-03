@@ -3,11 +3,11 @@ import { DataTypes } from 'sequelize';
 const Country = (sequelize, Sequelize) => {
   const Country = sequelize.define('country', {
 
-    countryName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-   countryCode: {
+    code: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -23,12 +23,7 @@ import { uploadFile } from './controllers/uploadController.js'
 import employeeRoutes from './routes/employeeRoutes.js';
 import { sendVerificationEmail,sendPasswordResetEmail,sendForgetPasswordEmail, } from './controllers/emailController.js';
 import emailRoutes from './routes/emailRoutes.js';
-  
-
-
-
-
-
+import coursesRoutes from './routes/coursesRoutes.js';
 
 
 
@@ -66,6 +61,9 @@ app.use('/api/v1/subscribe', newsletterRoutes);
 app.use('/api/v1/upload', upload.single('file'), uploadFile);
 app.use('/api/v1/', employeeRoutes)
 app.use('/api/v1/', emailRoutes)
+app.use('/api/v1/', coursesRoutes)
+
+
 
 // Get a list of registered endpoints
 const endpoints = listEndpoints(app);

@@ -21,14 +21,7 @@ salary_range: {
 type: DataTypes.STRING,
 allowNull: false
 },
-location_id: {
-type: DataTypes.INTEGER,
-allowNull: false
-},
-employer_id: {
-type: DataTypes.INTEGER,
-allowNull: false
-}
+
 });
 
 Job.associate = models => {

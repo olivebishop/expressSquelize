@@ -106,7 +106,7 @@ const assignRoleAndNotify = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error('Error assigning role and notifying user:', error);
+    console.error('User already assigned role. Please try another user.:', error);
     return res.status(500).json({ message: 'Error assigning role. Please try again later.' });
   }
 };

@@ -7,15 +7,14 @@ const { Job } = db;
 
 const createJob = async (req, res) => {
   try {
-    const { title, description, job_requirements, type, salary_range, location_id, employer_id } = req.body;
+    const { title, description, job_requirements, type, salary_range } = req.body;
     const job = await Job.create({
       title,
       description,
       job_requirements,
       type,
       salary_range,
-      location_id,
-      employer_id
+      
     });
     res.status(201).json(job);
   } catch (err) {
@@ -53,15 +52,14 @@ const updateJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
-    const { title, description, type, salary_range, location_id, employer_id } = req.body;
+    const { title, description, type, salary_range } = req.body;
     await job.update({
       title,
       description,
       job_requirements,
       type,
       salary_range,
-      location_id,
-      employer_id
+      
     });
     res.status(200).json(job);
   } catch (err) {
