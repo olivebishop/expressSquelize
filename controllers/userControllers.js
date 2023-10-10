@@ -80,5 +80,33 @@ const deleteUserById = async (req, res) => {
         res.status(400).json(error);
     }
 }
+const updateUserProfile = async (req, res) => {
+    const { id } = req.params;
+    const { newUsername, profilePictureURL } = req.body;
+  
+    try {
+      const user = await User.findByPk(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Update the user's information
+      user.username = newUsername;
+  
+      if (profilePictureURL) {
+        user.profilePictureURL = profilePictureURL;
+      }
+  
+      // Save the updated user data
+      await user.save();
+  
+      res.status(200).json({ message: "Profile updated successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error" });
+    }
+  };
+  
 
-export { createUser, getAllUsers, getUserById, updateUserById, deleteUserById };
+export { createUser, getAllUsers, getUserById, updateUserById, deleteUserById, updateUserProfile };

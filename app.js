@@ -12,7 +12,7 @@ import db from './models/index.js';
 import newsletterRoutes from './routes/newsletterRoutes.js';
 import listEndpoints from 'express-list-endpoints'; // Import express-list-endpoints
 //import employeeRoutes from './routes/employeeRoutes.js'
-//import adminRoutes from './routes/adminRoutes.js'
+import adminRoutes from './routes/adminRoutes.js'
 //import agencyRoutes from './routes/agencyRoutes.js'
 //import employerRoutes from './routes/employerRoutes.js'
 import jobRoutes from './routes/jobRoutes.js'
@@ -24,7 +24,7 @@ import employeeRoutes from './routes/employeeRoutes.js';
 import { sendVerificationEmail,sendPasswordResetEmail,sendForgetPasswordEmail, } from './controllers/emailController.js';
 import emailRoutes from './routes/emailRoutes.js';
 import coursesRoutes from './routes/coursesRoutes.js';
-
+import PaymentRoutes from './routes/PaymentRoutes.js';
 
 
 const sequelize = db.sequelize;
@@ -62,7 +62,8 @@ app.use('/api/v1/upload', upload.single('file'), uploadFile);
 app.use('/api/v1/', employeeRoutes)
 app.use('/api/v1/', emailRoutes)
 app.use('/api/v1/', coursesRoutes)
-
+app.use('/api/v1/', PaymentRoutes)
+app.use ('/api/v1/', adminRoutes)
 
 
 // Get a list of registered endpoints

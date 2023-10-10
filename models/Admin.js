@@ -2,15 +2,23 @@ import { DataTypes } from 'sequelize';
 
 const Admin = (sequelize, Sequelize) => {
   const Admin = sequelize.define('admin', {
-    fullname: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    Country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    City: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -34,16 +42,13 @@ const Admin = (sequelize, Sequelize) => {
     }
   };
 
-  // View all users with their account type
-  Admin.prototype.viewUsersWithAccountType = async function () {
-    const user = await this.getUser(); // Assumes you have a `getUser` method in your Admin model
-    if (user) {
-      // Access the associated user's account type
-      const accountType = user.accountType;
-      return { user, accountType };
-    }
-    return null;
-  };
+  // Sequelize hook before creating an Admin
+  Admin.beforeCreate(async (admin) => {
+    const user = await sequelize.models.User.create();
+
+    // Associate the Admin with the User
+    admin.userId = user.id;
+  });
 
   return Admin;
 };

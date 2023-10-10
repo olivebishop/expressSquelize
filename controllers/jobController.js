@@ -52,7 +52,7 @@ const updateJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
-    const { title, description, type, salary_range } = req.body;
+    const { title, description, job_requirements, type, salary_range } = req.body;
     await job.update({
       title,
       description,

@@ -83,33 +83,42 @@ const deleteRoleById = async (req, res) => {
 const assignRoleAndNotify = async (req, res) => {
   try {
     const { userId, role } = req.body;
+    let roleId; // Declare roleId outside the if-else block
 
     // Assign the role to the user based on userId (update your database accordingly)
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
-    }else{
-          // Update the user's role (update your database accordingly)
-    // Example: user.role = role;
+    } else {
+      // Update the user's role (update your database accordingly)
+      // Example: user.role = role;
 
-    // Send a verification email
-    //await mailer.sendVerificationEmail(user.email, user.username, role);
-      if (role === 'employer') {
-        user.role = 'employer';
+      // Send a verification email
+      if (role === 'admin') {
+        user.role = 'admin'; // Assign the 'admin' role to the user
+      } else if (role === 'agency') {
+        roleId = 2; // Role ID for 'agency'
+        await UserRole.create({ roleId, userId }); // Assign the 'agency' role using UserRole model
+      } else if (role === 'employer') {
+        roleId = 3; // Role ID for 'employer'
+        await UserRole.create({ roleId, userId }); // Assign the 'employer' role using UserRole model
       } else if (role === 'employee') {
-        const roleId = 4;
+        roleId = 4; // Role ID for 'employee'
         await UserRole.create({ roleId, userId });
         // Respond with a success message
-        return res.status(200).json({ message: 'Role assigned and verification email sent successfully.', userId: userId, role: roleId });
-      } else {    
-        user.role = 'admin';
+      } else {
+        return res.status(400).json({ message: 'Invalid role specified' });
       }
+      
+      // Move the return statement here to include roleId in the response
+      return res.status(200).json({ message: 'Role assigned and verification email sent successfully.', userId: userId, role: roleId });
     }
   } catch (error) {
-    console.error('User already assigned role. Please try another user.:', error);
+    console.error('Error assigning role:', error);
     return res.status(500).json({ message: 'Error assigning role. Please try again later.' });
   }
 };
+
 
 export {
   createRole,

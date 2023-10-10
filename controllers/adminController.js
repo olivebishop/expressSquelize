@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Admin = db.Admin;
+const User = db.User;
 
 const getAllAdmins = async (req, res) => {
   try {
@@ -11,20 +12,39 @@ const getAllAdmins = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
   }
-}
+};
 
 const getAdminById = async (req, res) => {
   const { id } = req.params;
   try {
-    const admin = await Admin.findByPk(id);
+    // Find the admin by ID, including the associated user's bio
+    const admin = await Admin.findOne({
+      where: { id },
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['firstName', 'lastName', 'country', 'city', 'phoneNumber'],
+      },
+    });
+
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
-    return res.status(200).json(admin);
+
+    // Extract the user's bio information
+    const userBio = {
+      firstName: admin.user.firstName,
+      lastName: admin.user.lastName,
+      country: admin.user.country,
+      city: admin.user.city,
+      phoneNumber: admin.user.phoneNumber,
+    };
+
+    return res.status(200).json(userBio);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
   }
-}
+};
 
 const createAdmin = async (req, res) => {
   const admin = req.body;
@@ -35,17 +55,19 @@ const createAdmin = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Bad request", error });
   }
-}
+};
 
 const updateAdminById = async (req, res) => {
   const { id } = req.params;
-  const { fullname, email, password } = req.body;
+  const { firstName, lastName, phoneNumber, Country, City } = req.body;
   try {
     const [updatedCount] = await Admin.update(
       {
-        fullname: fullname,
-        email: email,
-        password: password
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        Country: Country,
+        City: City,
       },
       { where: { id: id } }
     );
@@ -56,7 +78,7 @@ const updateAdminById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Bad request", error });
   }
-}
+};
 
 const deleteAdminById = async (req, res) => {
   const { id } = req.params;
@@ -70,6 +92,6 @@ const deleteAdminById = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: "Bad request", error });
   }
-}
+};
 
 export { createAdmin, getAllAdmins, getAdminById, updateAdminById, deleteAdminById };
