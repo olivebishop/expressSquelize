@@ -1,4 +1,5 @@
 // Import the necessary modules and database models
+import { application } from 'express';
 import db from '../models/index.js';
 
 const { Application } = db;
@@ -9,7 +10,9 @@ const createApplication = async (req, res) => {
     const application = await Application.create({
       name,
       email,
-      phone
+      phone,
+     
+        
     });
     res.status(201).json(application);
   } catch (err) {
@@ -20,11 +23,11 @@ const createApplication = async (req, res) => {
 
 const getApplicationById = async (req, res) => {
   try {
-    const job = await Job.findByPk(req.params.id);
-    if (!job) {
+    const application = await Application .findByPk(req.params.id);
+    if (!application) {
       return res.status(404).json({ message: 'Job not found' });
     }
-    res.status(200).json(job);
+    res.status(200).json(application);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error getting job' });
@@ -33,8 +36,8 @@ const getApplicationById = async (req, res) => {
 
 const getAllApplications = async (req, res) => {
   try {
-    const jobs = await Job.findAll();
-    res.status(200).json(jobs);
+    const application = await Application .findAll();
+    res.status(200).json(application);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error getting jobs' });
@@ -43,37 +46,34 @@ const getAllApplications = async (req, res) => {
 
 const updateApplication = async (req, res) => {
   try {
-    const job = await Job.findByPk(req.params.id);
-    if (!job) {
+    const application = await Job.findByPk(req.params.id);
+    if (!application) {
       return res.status(404).json({ message: 'Job not found' });
     }
-    const { title, description, type, salary_range, location_id, employer_id } = req.body;
-    await job.update({
-      title,
-      description,
-      type,
-      salary_range,
-      location_id,
-      employer_id
+    const { name, email, phone } = req.body;
+    await application.update({
+      name,
+      email,
+      phone
     });
-    res.status(200).json(job);
+    res.status(200).json(application);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error updating job' });
+    res.status(500).json({ message: 'Error updating application' });
   }
 };
 
 const deleteApplication = async (req, res) => {
   try {
-    const job = await Job.findByPk(req.params.id);
-    if (!job) {
-      return res.status(404).json({ message: 'Job not found' });
+    const application = await Application.findByPk(req.params.id);
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found' });
     }
-    await job.destroy();
+    await application.destroy();
     res.status(204).json();
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error deleting job' });
+    res.status(500).json({ message: 'Error deleting application' });
   }
 };
 

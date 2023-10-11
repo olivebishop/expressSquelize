@@ -88,4 +88,6 @@ db.Application.belongsToMany(db.Job, {
 
 
 
+
+
 export default db;

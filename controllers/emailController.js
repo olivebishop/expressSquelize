@@ -1,5 +1,6 @@
   // Import the necessary modules
   import nodemailer from 'nodemailer';
+  import jwt from 'jsonwebtoken';
 
   // Function to send a verification email
   const sendVerificationEmail = (user, res) => {
@@ -185,11 +186,50 @@
         }
       });
     });
+    
   };
+  const sendHiredEmail = (user, res) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'olivehendrilgen1@gmail.com',
+        pass: 'fsih juqg aora qhpb', // Replace with your Gmail password or use environment variables
+      },
+    });
+  
+    const mailOptions = {
+      from: 'olivehendrilgen1@gmail.com',
+      to: user.email,
+      subject: "You've Been Hired!",
+      html: `
+        Hello ${user.name},<br><br>
+        Congratulations! We are excited to inform you that you've been hired for the position you applied for.<br><br>
+        Here are the details:<br>  
+        - Start Date: [1st November, 2023]<br>      
+        - Location: [Nairobi]<br>          
+        <br><br>
+        If you have any questions or need further information, please don't hesitate to contact us.<br><br>
+        Regards,<br>Mfanyikazi Abroad😊`,
+    };
+  
+    transporter.sendMail(mailOptions, (err, response) => {
+      if (err) {
+        console.log('There was an error sending the email', err);
+        res.status(500).json('Email sending failed');
+      } else {
+        console.log('Email sent successfully', response);
+        res.status(200).json("You've been hired email sent");
+      }
+    });
+  };
+  
+
+
   export {
     sendVerificationEmail,
     sendPasswordResetEmail,
     sendForgetPasswordEmail,
     sendNewsletterSubscriptionEmail,
     sendPromotions,
+    sendHiredEmail,
   };
